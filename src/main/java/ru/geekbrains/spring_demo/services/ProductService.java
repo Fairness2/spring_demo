@@ -2,7 +2,7 @@ package ru.geekbrains.spring_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring_demo.model.Product;
+import ru.geekbrains.spring_demo.model.HiProduct;
 import ru.geekbrains.spring_demo.repositories.ProductRepository;
 
 import java.util.List;
@@ -14,23 +14,23 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    public List<Product> getAll() {
+    public List<HiProduct> getAll() {
         return repository.getAll();
     }
 
-    public Product getOne(UUID uuid) {
-        return repository.getOne(uuid);
+    public HiProduct getOne(Integer id) {
+        return repository.getOne(id);
     }
 
-    public Product add(String title, int cost) {
+    public HiProduct add(String title, int cost) {
         return repository.create(title, cost);
     }
 
-    public Product update(String uuid, String title, int cost) {
-        return repository.update(uuid, title, cost);
+    public HiProduct update(Integer id, String title, int cost) {
+        return repository.update(id, title, cost);
     }
 
-    public boolean update(String uuid) {
-        return repository.delete(uuid);
+    public boolean delete(Integer id) {
+        return repository.delete(id);
     }
 }
