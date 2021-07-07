@@ -8,8 +8,13 @@
 </head>
 
 <body>
-<h1>Добавление продукта:</h1>
-<form method="post" th:action="@{/products/add}" >
+<h1>Изменение продукта:</h1>
+<form method="post" th:action="@{/products/update}" >
+    <label for="id">ID</label>
+    <input
+    id="id"
+    name="id"
+    type="number" />
     <label for="title">Название</label>
     <input
     id="title"
@@ -20,11 +25,11 @@
     id="cost"
     name="cost"
     type="number" />
-    <button type="submit">Сохранить</button>
+    <button type="submit">Изменить</button>
 </form>
 
 <div th:if="${product != null}">
-    <div>Новый элемент:</div>
+    <div>Изменённый элемент:</div>
     <div th:text="'ID: ' + ${product.id}"></div>
     <div th:text="'Название: ' + ${product.title}"></div>
     <div th:text="'Цена: ' + ${product.cost}"></div>
