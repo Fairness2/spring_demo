@@ -41,6 +41,10 @@ CREATE TABLE `ref_user_product` (
                                     CONSTRAINT `ref_user_product_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
+INSERT INTO ref_user_product (user_id, product_id, current_cost)
+VALUES (1, 1, 95),
+       (1, 2, 195),
+       (2, 3, 295),
+       (2, 4, 395);
 
 COMMIT;

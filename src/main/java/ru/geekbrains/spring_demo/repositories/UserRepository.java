@@ -13,13 +13,12 @@ import javax.annotation.PreDestroy;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class ProductRepository {
+public class UserRepository {
     private SessionFactory factory;
-
 
     @PostConstruct
     public void init() {
@@ -42,67 +41,65 @@ public class ProductRepository {
         factory.close();
     }
 
-    public boolean add(HiProduct product) {
+    public boolean add(User user) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        session.saveOrUpdate(product);
+        session.saveOrUpdate(user);
         session.getTransaction().commit();
 
-        return product.getId() != null;
+        return user.getId() != null;
     }
 
     public boolean delete(Integer id) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
-        session.delete(product);
+        User user = session.get(User.class, id);
+        session.delete(user);
         session.getTransaction().commit();
 
-        return product.getId() != null;
+        return user.getId() != null;
     }
 
-    public List<HiProduct> getAll() {
+    public List<User> getAll() {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        List<HiProduct> list = session.createQuery("from HiProduct").getResultList();
+        List<User> list = session.createQuery("from User ").getResultList();
         session.getTransaction().commit();
 
         return list;
     }
 
-    public HiProduct getOne(Integer id) {
+    public User getOne(Integer id) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
+        User user = session.get(User.class, id);
         session.getTransaction().commit();
 
-        return product;
+        return user;
     }
 
-    public HiProduct create(String title, int cost) {
-        HiProduct product = new HiProduct();
-        product.setTitle(title);
-        product.setCost(cost);
+    public User create(String name) {
+        User user = new User();
+        user.setName(name);
 
-        return this.add(product) ? product : null;
+        return this.add(user) ? user : null;
     }
 
-    public HiProduct update(Integer id, String title, int cost) {
+    public User update(Integer id, String name) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
-        product.setTitle(title);
-        product.setCost(cost);
-        session.saveOrUpdate(product);
+        User user = session.get(User.class, id);
+        user.setName(name);
+        session.saveOrUpdate(user);
         session.getTransaction().commit();
-        return product;
+        return user;
     }
 
-    public List<UserProduct> getUserProducts(HiProduct product) {
+    public List<UserProduct> getUserProducts(User user) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct tempProduct = session.get(HiProduct.class, product.getId());
-        List<UserProduct> list = tempProduct.getUserProducts();
+        User tempUser = session.get(User.class, user.getId());
+        List<UserProduct> list = tempUser.getUserProducts();
         int size = list.size();
         session.getTransaction().commit();
         return list;

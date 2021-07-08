@@ -7,35 +7,19 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "ref_user_product")
 public class UserProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "name")
-    private String name;
-
-    @ManyToMany
-    @JoinTable (
-            name = "ref_user_product",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
-
-    @Override
-    public boolean equals(Object anObject) {
-        if (anObject instanceof UserProduct) {
-            return this.id.equals(((UserProduct) anObject).id);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("User: {%nID: %s%nName: %s%n}%n", id, name);
-    }
+    @Column(name = "current_cost")
+    private Integer currentCost;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private HiProduct product;
 
 }

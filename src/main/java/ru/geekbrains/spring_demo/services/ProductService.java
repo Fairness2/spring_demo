@@ -3,6 +3,8 @@ package ru.geekbrains.spring_demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring_demo.model.HiProduct;
+import ru.geekbrains.spring_demo.model.User;
+import ru.geekbrains.spring_demo.model.UserProduct;
 import ru.geekbrains.spring_demo.repositories.ProductRepository;
 
 import java.util.List;
@@ -32,5 +34,9 @@ public class ProductService {
 
     public boolean delete(Integer id) {
         return repository.delete(id);
+    }
+
+    public List<UserProduct> userProducts(HiProduct product) {
+        return repository.getUserProducts(product);
     }
 }

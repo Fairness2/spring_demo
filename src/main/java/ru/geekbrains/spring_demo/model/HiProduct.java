@@ -3,6 +3,7 @@ package ru.geekbrains.spring_demo.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,6 +17,17 @@ public class HiProduct {
     private String title;
     @Column(name = "cost")
     private int cost;
+
+    @OneToMany(mappedBy = "product")
+    private List<UserProduct> userProducts;
+
+    @ManyToMany
+    @JoinTable (
+            name = "ref_user_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> users;
 
 
     @Override

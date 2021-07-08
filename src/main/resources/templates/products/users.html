@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:text="'Пользователи купившие продукт ' + ${product.id}"></title>
+</head>
+
+<body>
+    <h1 th:text="'Продукт ' + ${product.id}"></h1>
+    <div th:text="'Название: ' + ${product.title}"></div>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Пользователь</th>
+        <th>Цена покупки</th>
+    </tr>
+    <tbody>
+    <tr th:each="userProduct : ${userProducts}">
+        <td th:text="${userProduct.user.id}"></td>
+        <td th:text="${userProduct.user.name}"></td>
+        <td th:text="${userProduct.currentCost}"></td>
+    </tr>
+    </tbody>
+    </thead>
+</table>
+</body>
+</html>

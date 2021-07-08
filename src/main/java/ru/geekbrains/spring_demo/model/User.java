@@ -16,13 +16,16 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserProduct> userProducts;
+
     @ManyToMany
     @JoinTable (
             name = "ref_user_product",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private List<Product> products;
+    private List<HiProduct> products;
 
     @Override
     public boolean equals(Object anObject) {
