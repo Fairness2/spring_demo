@@ -14,7 +14,7 @@ import ru.geekbrains.spring_demo.services.ProductService;
 import java.util.List;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/products")
 public class ProductController {
 
