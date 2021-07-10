@@ -2,14 +2,10 @@ server:
   port: 8189
   servlet:
     context-path: /app
-  error:
-    whitelabel:
-      enabled: false
-    path: /error
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/test
+    url: jdbc:mysql://localhost:3306/test2
     username: root
     password: 1234567890
   jpa:
