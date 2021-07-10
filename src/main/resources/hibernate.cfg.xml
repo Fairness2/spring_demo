@@ -4,7 +4,7 @@
 
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="connection.url">jdbc:mysql://localhost:3306/test</property>
         <property name="connection.username">root</property>
         <property name="connection.password">1234567890</property>
@@ -15,5 +15,7 @@
         <property name="current_session_context_class">thread</property>
 
         <mapping class="ru.geekbrains.spring_demo.model.HiProduct"/>
+        <mapping class="ru.geekbrains.spring_demo.model.User"/>
+        <mapping class="ru.geekbrains.spring_demo.model.UserProduct"/>
     </session-factory>
 </hibernate-configuration>

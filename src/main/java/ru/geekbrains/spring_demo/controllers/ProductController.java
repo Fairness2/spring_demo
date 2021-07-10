@@ -6,8 +6,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.geekbrains.spring_demo.model.HiProduct;
+import ru.geekbrains.spring_demo.model.Product;
+import ru.geekbrains.spring_demo.model.User;
+import ru.geekbrains.spring_demo.model.UserProduct;
 import ru.geekbrains.spring_demo.services.ProductService;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -32,14 +36,14 @@ public class ProductController {
     @GetMapping("/add")
     public String showAddForm(RedirectAttributes redirectAttributes, Model model) {
         HiProduct product = (HiProduct) redirectAttributes.getAttribute("product");
-        model.addAttribute("products", product);
+        model.addAttribute("product", product);
         return "products/add_form";
     }
 
     @GetMapping("/update")
     public String showUpdateForm(RedirectAttributes redirectAttributes, Model model) {
         HiProduct product = (HiProduct) redirectAttributes.getAttribute("product");
-        model.addAttribute("products", product);
+        model.addAttribute("product", product);
         return "products/update_form";
     }
 
@@ -66,5 +70,14 @@ public class ProductController {
     public String addProduct(@RequestParam Integer id, RedirectAttributes redirectAttributes) {
         productService.delete(id);
         return "redirect:/products/";
+    }
+
+    @GetMapping("/{id}/users")
+    public String showUsersProducts(@PathVariable Integer id, Model model) {
+        HiProduct product = productService.getOne(id);
+        List<UserProduct> userProductList = productService.userProducts(product);
+        model.addAttribute("product", product);
+        model.addAttribute("userProducts", userProductList);
+        return "products/users";
     }
 }

@@ -5,21 +5,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
 import ru.geekbrains.spring_demo.model.HiProduct;
+import ru.geekbrains.spring_demo.model.Product;
 import ru.geekbrains.spring_demo.model.User;
 import ru.geekbrains.spring_demo.model.UserProduct;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Repository
-public class ProductRepository {
+public class UserProductRepository {
     private SessionFactory factory;
-
 
     @PostConstruct
     public void init() {
@@ -42,70 +38,62 @@ public class ProductRepository {
         factory.close();
     }
 
-    public boolean add(HiProduct product) {
+    public boolean add(UserProduct userProduct) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        session.saveOrUpdate(product);
+        session.saveOrUpdate(userProduct);
         session.getTransaction().commit();
 
-        return product.getId() != null;
+        return userProduct.getId() != null;
     }
 
     public boolean delete(Integer id) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
-        session.delete(product);
+        UserProduct userProduct = session.get(UserProduct.class, id);
+        session.delete(userProduct);
         session.getTransaction().commit();
 
-        return product.getId() != null;
+        return userProduct.getId() != null;
     }
 
-    public List<HiProduct> getAll() {
+    public List<UserProduct> getAll() {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        List<HiProduct> list = session.createQuery("from HiProduct").getResultList();
+        List<UserProduct> list = session.createQuery("from UserProduct ").getResultList();
         session.getTransaction().commit();
 
         return list;
     }
 
-    public HiProduct getOne(Integer id) {
+    public UserProduct getOne(Integer id) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
+        UserProduct userProduct = session.get(UserProduct.class, id);
         session.getTransaction().commit();
 
-        return product;
+        return userProduct;
     }
 
-    public HiProduct create(String title, int cost) {
-        HiProduct product = new HiProduct();
-        product.setTitle(title);
-        product.setCost(cost);
+    public UserProduct create(User user, HiProduct product, Integer currentCost) {
+        UserProduct userProduct = new UserProduct();
+        userProduct.setUser(user);
+        userProduct.setProduct(product);
+        userProduct.setCurrentCost(currentCost);
 
-        return this.add(product) ? product : null;
+        return this.add(userProduct) ? userProduct : null;
     }
 
-    public HiProduct update(Integer id, String title, int cost) {
+    public UserProduct update(Integer id, User user, HiProduct product, Integer currentCost) {
         Session session = factory.getCurrentSession();
         session.beginTransaction();
-        HiProduct product = session.get(HiProduct.class, id);
-        product.setTitle(title);
-        product.setCost(cost);
-        session.saveOrUpdate(product);
+        UserProduct userProduct = session.get(UserProduct.class, id);
+        userProduct.setUser(user);
+        userProduct.setProduct(product);
+        userProduct.setCurrentCost(currentCost);
+        session.saveOrUpdate(userProduct);
         session.getTransaction().commit();
-        return product;
-    }
-
-    public List<UserProduct> getUserProducts(HiProduct product) {
-        Session session = factory.getCurrentSession();
-        session.beginTransaction();
-        HiProduct tempProduct = session.get(HiProduct.class, product.getId());
-        List<UserProduct> list = tempProduct.getUserProducts();
-        int size = list.size();
-        session.getTransaction().commit();
-        return list;
+        return userProduct;
     }
 
 
