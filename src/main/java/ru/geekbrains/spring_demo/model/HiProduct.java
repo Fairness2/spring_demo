@@ -1,6 +1,7 @@
 package ru.geekbrains.spring_demo.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "product")
+@NoArgsConstructor
 public class HiProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,9 +18,14 @@ public class HiProduct {
     @Column(name = "title")
     private String title;
     @Column(name = "cost")
-    private int cost;
+    private Integer cost;
 
-    @OneToMany(mappedBy = "product")
+    public HiProduct(String title, Integer cost) {
+        this.title = title;
+        this.cost = cost;
+    }
+
+    /*@OneToMany(mappedBy = "product")
     private List<UserProduct> userProducts;
 
     @ManyToMany
@@ -42,6 +49,6 @@ public class HiProduct {
     @Override
     public String toString() {
         return String.format("Product: {%nID: %s%nTitle: %s%nCost: %s%n}%n", id, title, cost);
-    }
+    }*/
 
 }
