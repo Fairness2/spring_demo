@@ -2,9 +2,9 @@ package ru.geekbrains.spring_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring_demo.model.HiProduct;
-import ru.geekbrains.spring_demo.model.User;
-import ru.geekbrains.spring_demo.model.UserProduct;
+import ru.geekbrains.spring_demo.model.entity.HiProduct;
+import ru.geekbrains.spring_demo.model.entity.User;
+import ru.geekbrains.spring_demo.model.entity.UserProduct;
 import ru.geekbrains.spring_demo.repositories.UserProductRepository;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class UserProductService {
 
-    @Autowired
+    /*@Autowired
     private UserProductRepository repository;
 
     public List<UserProduct> getAll() {
@@ -33,5 +33,5 @@ public class UserProductService {
 
     public boolean delete(Integer id) {
         return repository.delete(id);
-    }
+    }*/
 }

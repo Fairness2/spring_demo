@@ -2,8 +2,8 @@ package ru.geekbrains.spring_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring_demo.model.User;
-import ru.geekbrains.spring_demo.model.UserProduct;
+import ru.geekbrains.spring_demo.model.entity.User;
+import ru.geekbrains.spring_demo.model.entity.UserProduct;
 import ru.geekbrains.spring_demo.repositories.UserRepository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
+    /*@Autowired
     private UserRepository repository;
 
     public List<User> getAll() {
@@ -36,5 +36,5 @@ public class UserService {
 
     public List<UserProduct> userProducts(User user) {
         return repository.getUserProducts(user);
-    }
+    }*/
 }

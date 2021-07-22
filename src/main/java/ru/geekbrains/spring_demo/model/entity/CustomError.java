@@ -1,4 +1,4 @@
-package ru.geekbrains.spring_demo.model;
+package ru.geekbrains.spring_demo.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

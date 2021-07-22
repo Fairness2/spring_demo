@@ -1,9 +1,13 @@
-package ru.geekbrains.spring_demo.model;
+package ru.geekbrains.spring_demo.model.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import ru.geekbrains.spring_demo.model.dto.ProductDto;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,10 +23,28 @@ public class HiProduct {
     private String title;
     @Column(name = "cost")
     private Integer cost;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public HiProduct(String title, Integer cost) {
         this.title = title;
         this.cost = cost;
+    }
+
+    public HiProduct(ProductDto dto) {
+        this.id = dto.getId();
+        this.title = dto.getTitle();
+        this.cost = dto.getCost();
+        this.category = new Category(dto.getCategory());
     }
 
     /*@OneToMany(mappedBy = "product")

@@ -18,6 +18,12 @@
         class="product-card__attribute-name"/>
     {{product.cost}}
   </div>
+  <div class="product-card__attribute">
+    <span
+        v-text="'Категория: '"
+        class="product-card__attribute-name"/>
+    {{product.category.name}}
+  </div>
   <div class="product-card__actions">
     <a
     href="#"
