@@ -15,4 +15,10 @@ public class ExceptionController {
         log.error(e.getMessage(), e);
         return new ResponseEntity<>(new ProjectError(HttpStatus.NOT_FOUND.value(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleInvalidParamsException(InvalidParamsException e) {
+        log.error(e.getMessage(), e);
+        return new ResponseEntity<>(new ProjectError(HttpStatus.BAD_REQUEST.value(), e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
 }
