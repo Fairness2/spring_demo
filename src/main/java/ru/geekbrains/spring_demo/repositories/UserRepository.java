@@ -4,28 +4,23 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Repository;
-import ru.geekbrains.spring_demo.model.HiProduct;
-import ru.geekbrains.spring_demo.model.User;
-import ru.geekbrains.spring_demo.model.UserProduct;
+import ru.geekbrains.spring_demo.model.entity.User;
+import ru.geekbrains.spring_demo.model.entity.UserProduct;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository {
-    private SessionFactory factory;
+    /*private SessionFactory factory;
 
     @PostConstruct
     public void init() {
         factory = new Configuration()
                 .configure("hibernate.cfg.xml")
                 .buildSessionFactory();
-        /*try {
+        try {
             String sql = Files.lines(Paths.get("init.sql")).collect(Collectors.joining(" "));
             Session session = factory.getCurrentSession();
             session.beginTransaction();
@@ -33,7 +28,7 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @PreDestroy
@@ -103,7 +98,7 @@ public class UserRepository {
         int size = list.size();
         session.getTransaction().commit();
         return list;
-    }
+    }*/
 
 
 }

@@ -1,17 +1,15 @@
 package ru.geekbrains.spring_demo.services;
 
 import lombok.Data;
-import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring_demo.exceptions.ProductNotFoundException;
-import ru.geekbrains.spring_demo.model.HiProduct;
+import ru.geekbrains.spring_demo.model.dto.ProductDto;
+import ru.geekbrains.spring_demo.model.entity.HiProduct;
 import ru.geekbrains.spring_demo.repositories.ProductRepository;
 
-import org.springframework.data.domain.Pageable;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,39 +21,39 @@ public class ProductService {
 
     private Integer perPage = 5;
 
-    public Page<HiProduct> getAll(Integer page, Integer min, Integer max, String like) {
+    public Page<ProductDto> getAll(Integer page, Integer min, Integer max, String like) {
         if (max == null && like == null) {
-            return repository.findAllByCostGreaterThanEqual(min, PageRequest.of(page, perPage));
+            return repository.findAllByCostGreaterThanEqual(min, PageRequest.of(page, perPage)).map(ProductDto::new);
         }
         else if (like == null){
-            return repository.findAllByCostBetween(min, max, PageRequest.of(page, perPage));
+            return repository.findAllByCostBetween(min, max, PageRequest.of(page, perPage)).map(ProductDto::new);
         }
         else if (max == null) {
-            return repository.findAllByCostGreaterThanEqualAndTitleLike(min, '%' + like + '%', PageRequest.of(page, perPage));
+            return repository.findAllByCostGreaterThanEqualAndTitleLike(min, '%' + like + '%', PageRequest.of(page, perPage)).map(ProductDto::new);
         }
         else {
-            return repository.findAllByCostBetweenAndTitleLike(min, max,'%' + like + '%', PageRequest.of(page, perPage));
+            return repository.findAllByCostBetweenAndTitleLike(min, max,'%' + like + '%', PageRequest.of(page, perPage)).map(ProductDto::new);
             //return repository.findAll();
         }
     }
 
-    public HiProduct getOne(Integer id) {
+    public ProductDto getOne(Integer id) {
         Optional<HiProduct> optional = repository.findById(id);
-        return optional.orElseThrow(() -> new ProductNotFoundException("Продукт не найден"));
+        return new ProductDto(optional.orElseThrow(() -> new ProductNotFoundException("Продукт не найден")));
     }
 
-    public HiProduct add(HiProduct product) {
+    public Integer add(ProductDto product) {
         if (product.getId() != null && repository.existsById(product.getId())) {
             throw new ProductNotFoundException("Продукт существует");
         }
-        return repository.save(product);
+        return (repository.save(new HiProduct(product))).getId();
     }
 
-    public HiProduct update(HiProduct product) {
+    public Integer update(ProductDto product) {
         if (!repository.existsById(product.getId())) {
             throw new ProductNotFoundException("Продукт существует");
         }
-        return repository.save(product);
+        return (repository.save(new HiProduct(product))).getId();
     }
 
     public void delete(Integer id) {

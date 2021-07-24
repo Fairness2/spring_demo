@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import ru.geekbrains.spring_demo.model.HiProduct;
-import ru.geekbrains.spring_demo.model.User;
-import ru.geekbrains.spring_demo.model.UserProduct;
-import ru.geekbrains.spring_demo.services.ProductService;
+import ru.geekbrains.spring_demo.model.entity.User;
+import ru.geekbrains.spring_demo.model.entity.UserProduct;
 import ru.geekbrains.spring_demo.services.UserService;
 
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
+    /*@Autowired
     private UserService userService;
 
     @GetMapping("/")
@@ -78,5 +76,5 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("userProducts", userProductList);
         return "users/products";
-    }
+    }*/
 }

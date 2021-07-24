@@ -1,9 +1,8 @@
-package ru.geekbrains.spring_demo.model;
+package ru.geekbrains.spring_demo.model.entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
@@ -15,6 +14,7 @@ public class UserProduct {
     private Integer id;
     @Column(name = "current_cost")
     private Integer currentCost;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
