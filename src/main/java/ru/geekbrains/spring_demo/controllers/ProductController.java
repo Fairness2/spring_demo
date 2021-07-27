@@ -2,10 +2,12 @@ package ru.geekbrains.spring_demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.geekbrains.spring_demo.model.dto.ProductDto;
 import ru.geekbrains.spring_demo.model.entity.HiProduct;
+import ru.geekbrains.spring_demo.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.spring_demo.services.ProductService;
 
 @RestController
@@ -16,9 +18,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public Page<ProductDto> getProducts(@RequestParam(defaultValue = "0") Integer min, @RequestParam(required = false) Integer max, @RequestParam(required = false) String like, @RequestParam(defaultValue = "1") Integer page) {
+    /*public Page<ProductDto> getProducts(@RequestParam(defaultValue = "0") Integer min, @RequestParam(required = false) Integer max, @RequestParam(required = false) String like, @RequestParam(defaultValue = "1") Integer page) {*/
+    public Page<ProductDto> getProducts(@RequestParam() MultiValueMap<String, String> params, @RequestParam(defaultValue = "1") Integer page) {
         page = page < 1 ? 1 : page;
-        return productService.getAll(page - 1, min, max, like);
+        return productService.getAll(page - 1, ProductSpecifications.build(params));
     }
 
     @GetMapping("/{id}")

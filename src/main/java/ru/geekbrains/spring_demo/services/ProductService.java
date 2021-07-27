@@ -4,7 +4,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import ru.geekbrains.spring_demo.exceptions.ProductNotFoundException;
 import ru.geekbrains.spring_demo.model.dto.ProductDto;
 import ru.geekbrains.spring_demo.model.entity.HiProduct;
@@ -21,8 +23,8 @@ public class ProductService {
 
     private Integer perPage = 5;
 
-    public Page<ProductDto> getAll(Integer page, Integer min, Integer max, String like) {
-        if (max == null && like == null) {
+    public Page<ProductDto> getAll(Integer page, Specification<HiProduct> specification) {
+        /*if (max == null && like == null) {
             return repository.findAllByCostGreaterThanEqual(min, PageRequest.of(page, perPage)).map(ProductDto::new);
         }
         else if (like == null){
@@ -34,7 +36,9 @@ public class ProductService {
         else {
             return repository.findAllByCostBetweenAndTitleLike(min, max,'%' + like + '%', PageRequest.of(page, perPage)).map(ProductDto::new);
             //return repository.findAll();
-        }
+        }*/
+
+        return repository.findAll(specification, PageRequest.of(page, perPage)).map(ProductDto::new);
     }
 
     public ProductDto getOne(Integer id) {
