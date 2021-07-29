@@ -2,11 +2,11 @@ package ru.geekbrains.spring_demo.repositories.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
-import ru.geekbrains.spring_demo.model.entity.HiProduct;
+import ru.geekbrains.spring_demo.model.entity.Product;
 
 public class ProductSpecifications {
-    public static Specification<HiProduct> build(MultiValueMap<String, String> params) {
-        Specification<HiProduct> specification = Specification.where(null);
+    public static Specification<Product> build(MultiValueMap<String, String> params) {
+        Specification<Product> specification = Specification.where(null);
 
         if (params.containsKey("min") && !params.getFirst("min").isBlank()) {
             specification = specification.and(ProductSpecifications.costGreaterThanEqual(Integer.parseInt(params.getFirst("min"))));
@@ -21,15 +21,15 @@ public class ProductSpecifications {
         return specification;
     }
 
-    private static Specification<HiProduct> costGreaterThanEqual(int min) {
+    private static Specification<Product> costGreaterThanEqual(int min) {
         return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("cost"), min));
     }
 
-    private static Specification<HiProduct> costLessThanEqual(int max) {
+    private static Specification<Product> costLessThanEqual(int max) {
         return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("cost"), max));
     }
 
-    private static Specification<HiProduct> titleLike(String titlePart) {
+    private static Specification<Product> titleLike(String titlePart) {
         return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder
                 .like(
                         criteriaBuilder.lower(root.get("title")),

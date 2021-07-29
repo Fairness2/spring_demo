@@ -8,17 +8,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
 public class Cart {
-    private final Map<HiProduct, Integer> products;
+    private final Map<Product, Integer> products;
 
     public Cart() {
         products = new HashMap<>();
     }
 
-    public void add(HiProduct product) {
+    public void add(Product product) {
         this.add(product, 1);
     }
 
-    public void add(HiProduct product, int count) {
+    public void add(Product product, int count) {
         if (!products.containsKey(product)) {
             products.put(product, count);
         }
@@ -27,11 +27,11 @@ public class Cart {
         }
     }
 
-    public void remove(HiProduct product) {
+    public void remove(Product product) {
         this.remove(product, 1);
     }
 
-    public Integer remove(HiProduct product, int count) {
+    public Integer remove(Product product, int count) {
         if (!products.containsKey(product)) {
             return 0;
         }
@@ -57,7 +57,7 @@ public class Cart {
         return cost.get();
     }
 
-    public Integer get(HiProduct product) {
+    public Integer get(Product product) {
         return products.get(product);
     }
 }

@@ -45,6 +45,7 @@ public class UserService implements UserDetailsService {
     public Integer increaseUserScore(String username, int score) {
         User user = this.getUserByUsername(username);
         user.setScore(user.getScore() + score);
+        repository.flush();
         return user.getScore();
     }
 

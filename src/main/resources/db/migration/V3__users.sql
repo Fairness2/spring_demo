@@ -51,8 +51,8 @@ INSERT INTO user (`id`, `username`, `password`) VALUES
 (2, 'user2', '$2y$12$vcHgYpJeOgBo66Dluqi5pORs5.m.Qcr78kaKahmN5hWjp5UbanUSe');
 
 INSERT INTO role (`id`, `name`) VALUES
-(1, 'ROLE_USER'),
-(2, 'ROLE_ADMIN');
+(1, 'USER'),
+(2, 'ADMIN');
 
 INSERT INTO ref_user_role (`user_id`, `role_id`) VALUES
 (1, 1),

@@ -6,10 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
 import ru.geekbrains.spring_demo.exceptions.ProductNotFoundException;
 import ru.geekbrains.spring_demo.model.dto.ProductDto;
-import ru.geekbrains.spring_demo.model.entity.HiProduct;
+import ru.geekbrains.spring_demo.model.entity.Product;
 import ru.geekbrains.spring_demo.repositories.ProductRepository;
 
 import java.util.Optional;
@@ -23,12 +22,12 @@ public class ProductService {
 
     private Integer perPage = 5;
 
-    public Page<ProductDto> getAll(Integer page, Specification<HiProduct> specification) {
+    public Page<ProductDto> getAll(Integer page, Specification<Product> specification) {
         return repository.findAll(specification, PageRequest.of(page, perPage)).map(ProductDto::new);
     }
 
     public ProductDto getOne(Integer id) {
-        Optional<HiProduct> optional = repository.findById(id);
+        Optional<Product> optional = repository.findById(id);
         return new ProductDto(optional.orElseThrow(() -> new ProductNotFoundException("Продукт не найден")));
     }
 
@@ -36,14 +35,14 @@ public class ProductService {
         if (product.getId() != null && repository.existsById(product.getId())) {
             throw new ProductNotFoundException("Продукт существует");
         }
-        return (repository.save(new HiProduct(product))).getId();
+        return (repository.save(new Product(product))).getId();
     }
 
     public Integer update(ProductDto product) {
         if (!repository.existsById(product.getId())) {
             throw new ProductNotFoundException("Продукт существует");
         }
-        return (repository.save(new HiProduct(product))).getId();
+        return (repository.save(new Product(product))).getId();
     }
 
     public void delete(Integer id) {

@@ -2,7 +2,6 @@ package ru.geekbrains.spring_demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/api/v1/score/get/{\\d}").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/score/get/current").authenticated()
+                .antMatchers("/api/v1/score/get/{\\d+}").hasAnyAuthority("ADMIN")
                 .antMatchers("/api/v1/score/**").authenticated()
                 //.antMatchers("/score/get/**").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll()
