@@ -1,18 +1,15 @@
 package ru.geekbrains.spring_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.geekbrains.spring_demo.exceptions.UserNotFoundException;
+import ru.geekbrains.spring_demo.model.CustomUserDetails;
 import ru.geekbrains.spring_demo.model.entity.User;
 import ru.geekbrains.spring_demo.repositories.UserRepository;
-
-import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -20,22 +17,26 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = repository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Неверные имя пользователя или пароль"));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), this.getUserAuthority(user));
-    }
-
-    private Collection<? extends GrantedAuthority> getUserAuthority(User user) {
-        return user.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
-                .collect(Collectors.toList());
+        return new CustomUserDetails(user);
     }
 
     public User getUserByUsername(String username) {
         return repository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
+    }
+
+    public User getUserByCredentials(String username, String password) {
+        User user = repository.findByUsername(username).orElse(null);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return user;
+        }
+        return null;
     }
 
     public User getUserById(Integer id) {
