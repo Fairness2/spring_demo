@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
-public class Chart {
+public class Cart {
     private final Map<HiProduct, Integer> products;
 
-    public Chart() {
+    public Cart() {
         products = new HashMap<>();
     }
 

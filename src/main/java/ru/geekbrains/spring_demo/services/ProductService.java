@@ -24,20 +24,6 @@ public class ProductService {
     private Integer perPage = 5;
 
     public Page<ProductDto> getAll(Integer page, Specification<HiProduct> specification) {
-        /*if (max == null && like == null) {
-            return repository.findAllByCostGreaterThanEqual(min, PageRequest.of(page, perPage)).map(ProductDto::new);
-        }
-        else if (like == null){
-            return repository.findAllByCostBetween(min, max, PageRequest.of(page, perPage)).map(ProductDto::new);
-        }
-        else if (max == null) {
-            return repository.findAllByCostGreaterThanEqualAndTitleLike(min, '%' + like + '%', PageRequest.of(page, perPage)).map(ProductDto::new);
-        }
-        else {
-            return repository.findAllByCostBetweenAndTitleLike(min, max,'%' + like + '%', PageRequest.of(page, perPage)).map(ProductDto::new);
-            //return repository.findAll();
-        }*/
-
         return repository.findAll(specification, PageRequest.of(page, perPage)).map(ProductDto::new);
     }
 
