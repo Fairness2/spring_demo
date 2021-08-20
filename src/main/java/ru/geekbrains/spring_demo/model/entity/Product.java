@@ -1,35 +1,49 @@
 package ru.geekbrains.spring_demo.model.entity;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import ru.geekbrains.spring_demo.model.dto.ProductDto;
 
-import java.util.UUID;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
-@Builder
+@Entity
+@Table(name = "product")
+@NoArgsConstructor
 public class Product {
-    private UUID uuid;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+    @Column(name = "title")
     private String title;
-    private int cost;
+    @Column(name = "cost")
+    private Integer cost;
+    @Column(name = "created_at")
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-
-    @Override
-    public int hashCode() {
-        return uuid.hashCode();
+    public Product(String title, Integer cost) {
+        this.title = title;
+        this.cost = cost;
     }
 
-    @Override
-    public boolean equals(Object anObject) {
-        if (anObject instanceof Product) {
-            return this.uuid.equals(((Product) anObject).uuid);
-        }
-
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Product: {%nUUID: %s%nTitle: %s%nCost: %s%n}%n", uuid, title, cost);
+    public Product(ProductDto dto) {
+        this.id = dto.getId();
+        this.title = dto.getTitle();
+        this.cost = dto.getCost();
+        this.category = new Category(dto.getCategory());
     }
 
 }

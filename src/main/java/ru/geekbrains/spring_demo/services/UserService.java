@@ -1,40 +1,63 @@
 package ru.geekbrains.spring_demo.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.geekbrains.spring_demo.exceptions.UserNotFoundException;
 import ru.geekbrains.spring_demo.model.entity.User;
-import ru.geekbrains.spring_demo.model.entity.UserProduct;
 import ru.geekbrains.spring_demo.repositories.UserRepository;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
-    /*@Autowired
+    @Autowired
     private UserRepository repository;
 
-    public List<User> getAll() {
-        return repository.getAll();
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Неверные имя пользователя или пароль"));
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), this.getUserAuthority(user));
     }
 
-    public User getOne(Integer id) {
-        return repository.getOne(id);
+    private Collection<? extends GrantedAuthority> getUserAuthority(User user) {
+        return user.getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
     }
 
-    public User add(String name) {
-        return repository.create(name);
+    public User getUserByUsername(String username) {
+        return repository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
-    public User update(Integer id, String name) {
-        return repository.update(id, name);
+    public User getUserById(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
-    public boolean delete(Integer id) {
-        return repository.delete(id);
+    public Integer increaseUserScore(String username, int score) {
+        User user = this.getUserByUsername(username);
+        user.setScore(user.getScore() + score);
+        repository.flush();
+        return user.getScore();
     }
 
-    public List<UserProduct> userProducts(User user) {
-        return repository.getUserProducts(user);
-    }*/
+    public Integer decreaseUserScore(String username, int score) {
+        return increaseUserScore(username, - score);
+    }
+
+    public Integer getUserScore(String username) {
+        return this.getUserByUsername(username).getScore();
+    }
+
+    public Integer getUserScore(Integer id) {
+        return this.getUserById(id).getScore();
+    }
 }
