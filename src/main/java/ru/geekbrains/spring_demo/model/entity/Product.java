@@ -8,6 +8,7 @@ import ru.geekbrains.spring_demo.model.dto.ProductDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,6 +34,14 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "ref_product_order",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    private List<Order> orders;
+    @OneToMany(mappedBy = "product")
+    private List<OrderProduct> orderProducts;
 
     public Product(String title, Integer cost) {
         this.title = title;
