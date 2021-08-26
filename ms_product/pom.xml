@@ -21,7 +21,12 @@
     <dependencies>
         <dependency>
             <groupId>ru.geekbrains</groupId>
-            <artifactId>core_libs</artifactId>
+            <artifactId>core_lib</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.geekbrains</groupId>
+            <artifactId>router_lib</artifactId>
             <version>0.0.1</version>
         </dependency>
     </dependencies>

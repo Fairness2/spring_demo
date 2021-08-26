@@ -2,7 +2,7 @@ package ru.geekbrains.spring_demo_products_ms.repositories.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
-import ru.geekbrains.spring_demo_products_ms.model.entity.Product;
+import ru.geekbrains.spring_demo_products_ms.models.enitites.Product;
 
 public class ProductSpecifications {
     public static Specification<Product> build(MultiValueMap<String, String> params) {

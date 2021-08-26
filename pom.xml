@@ -5,10 +5,15 @@
 	<packaging>pom</packaging>
 	<modules>
 		<!-- common-libs -->
-		<module>core_libs</module>
+		<module>core_lib</module>
+		<module>router_lib</module>
 		<!-- micro-services -->
 		<module>ms_product</module>
-	</modules>
+        <module>ms_auth</module>
+        <module>ms_front</module>
+        <module>ms_order</module>
+        <module>ms_payment</module>
+    </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -23,7 +28,13 @@
 	<properties>
 		<java.version>16</java.version>
 	</properties>
-	<dependencies></dependencies>
+	<dependencies>
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>

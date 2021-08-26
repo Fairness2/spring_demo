@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.spring_demo_products_ms.model.dto.ProductDto;
+import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 import ru.geekbrains.spring_demo_products_ms.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.spring_demo_products_ms.services.ProductService;
 
 @RestController
-@RequestMapping("/api/v1/products")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
