@@ -17,5 +17,9 @@ spring:
     redis:
       use-key-prefix: true
       key-prefix: ms_product
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
 jwt:
   secret: 45T47fcXazP5pgMmWXKByCZWpWUzQrZrJMVegYVbcxhXFk22uVDWS9TAzpwmq8ZG
