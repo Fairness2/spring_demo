@@ -23,3 +23,4 @@ spring:
     database: 0
 jwt:
   secret: 45T47fcXazP5pgMmWXKByCZWpWUzQrZrJMVegYVbcxhXFk22uVDWS9TAzpwmq8ZG
+  ttl: 3600
