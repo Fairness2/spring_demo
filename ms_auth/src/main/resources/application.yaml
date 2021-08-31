@@ -1,0 +1,21 @@
+server:
+  port: 8189
+  servlet:
+    context-path: /api/v1
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_auth
+    username: root
+    password: 1234567890
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  cache:
+    redis:
+      use-key-prefix: true
+      key-prefix: ms_product
+jwt:
+  secret: 45T47fcXazP5pgMmWXKByCZWpWUzQrZrJMVegYVbcxhXFk22uVDWS9TAzpwmq8ZG
