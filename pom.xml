@@ -13,6 +13,7 @@
         <module>ms_front</module>
         <module>ms_order</module>
         <module>ms_payment</module>
+        <module>eureka</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -27,7 +28,9 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>16</java.version>
+		<spring-cloud.version>2020.0.3</spring-cloud.version>
 	</properties>
+
 	<dependencies>
 		<!-- Lombok -->
 		<dependency>
@@ -52,5 +55,17 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 </project>

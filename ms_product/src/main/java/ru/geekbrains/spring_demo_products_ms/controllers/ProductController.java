@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 import ru.geekbrains.spring_demo_products_ms.repositories.specifications.ProductSpecifications;
 import ru.geekbrains.spring_demo_products_ms.services.ProductService;
+import ru.geekbrains.spring_demo_router_lib.dto.ProductListDto;
 
 @RestController
 @RequestMapping("/products")
@@ -16,9 +17,10 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public Page<ProductDto> getProducts(@RequestParam() MultiValueMap<String, String> params, @RequestParam(defaultValue = "1") Integer page) {
+    public ProductListDto getProducts(@RequestParam() MultiValueMap<String, String> params, @RequestParam(defaultValue = "1") Integer page) {
         page = page < 1 ? 1 : page;
-        return productService.getAll(page - 1, ProductSpecifications.build(params));
+        Page<ProductDto> productPage = productService.getAll(page - 1, ProductSpecifications.build(params));
+        return new ProductListDto(productPage.getContent(), productPage.getNumber(), productPage.getTotalPages());
     }
 
     @GetMapping("/{id}")

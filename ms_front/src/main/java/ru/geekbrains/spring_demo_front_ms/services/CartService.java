@@ -2,7 +2,6 @@ package ru.geekbrains.spring_demo_front_ms.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.SessionScope;
-import ru.geekbrains.spring_demo_core_lib.exceptions.ProductNotFoundException;
 import ru.geekbrains.spring_demo_router_lib.dto.CartDto;
 import ru.geekbrains.spring_demo_front_ms.models.entities.Cart;
 import ru.geekbrains.spring_demo_front_ms.models.entities.Product;

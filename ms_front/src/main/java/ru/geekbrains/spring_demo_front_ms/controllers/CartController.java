@@ -2,7 +2,6 @@ package ru.geekbrains.spring_demo_front_ms.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.spring_demo_core_lib.exceptions.InvalidParamsException;
 import ru.geekbrains.spring_demo_router_lib.dto.CartDto;
 import ru.geekbrains.spring_demo_front_ms.services.CartService;
 
@@ -10,9 +9,9 @@ import ru.geekbrains.spring_demo_front_ms.services.CartService;
 @RequestMapping("/api/v1/cart")
 @RequiredArgsConstructor
 public class CartController {
-    private final CartService cartService;
+        /*@GetMapping
+private final CartService cartService;
 
-    @GetMapping
     public CartDto getCart() {
         return cartService.getCart();
     }
@@ -35,5 +34,5 @@ public class CartController {
         }
 
         return cartService.remove(productId, count);
-    }
+    }*/
 }

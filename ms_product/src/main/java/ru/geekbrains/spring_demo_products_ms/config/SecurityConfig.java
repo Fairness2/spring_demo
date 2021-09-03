@@ -13,7 +13,7 @@ public class SecurityConfig extends CommonSecurityConfig {
     protected void configurePaths(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/**").anonymous()
                 .anyRequest().permitAll();
     }
 }
