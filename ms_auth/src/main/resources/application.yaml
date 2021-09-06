@@ -1,5 +1,5 @@
 server:
-  port: 8189
+  port: 0
   servlet:
     context-path: /api/v1
 spring:
@@ -16,7 +16,14 @@ spring:
   cache:
     redis:
       use-key-prefix: true
-      key-prefix: ms_product
+      key-prefix: ms_auth
+  application:
+    name: auth-service
 jwt:
   secret: 45T47fcXazP5pgMmWXKByCZWpWUzQrZrJMVegYVbcxhXFk22uVDWS9TAzpwmq8ZG
   ttl: 3600
+
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}

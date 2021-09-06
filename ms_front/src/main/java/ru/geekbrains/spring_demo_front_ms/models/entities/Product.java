@@ -3,11 +3,8 @@ package ru.geekbrains.spring_demo_front_ms.models.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

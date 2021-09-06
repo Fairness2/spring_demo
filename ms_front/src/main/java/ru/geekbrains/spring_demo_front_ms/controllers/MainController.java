@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class MainController {
-    @GetMapping
+    /*@GetMapping
     public String main(Model model) {
         return "index";
     }
@@ -16,5 +16,5 @@ public class MainController {
     @GetMapping("/products")
     public String products(Model model) {
         return "index";
-    }
+    }*/
 }
