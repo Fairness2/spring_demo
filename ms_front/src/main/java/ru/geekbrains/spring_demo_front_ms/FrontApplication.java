@@ -6,7 +6,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication(scanBasePackages = "ru.geekbrains.spring_demo_front_ms")
-@EnableFeignClients
+@EnableFeignClients(basePackages = "ru.geekbrains")
 @EnableEurekaClient
 public class FrontApplication {
 
