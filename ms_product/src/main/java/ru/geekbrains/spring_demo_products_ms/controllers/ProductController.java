@@ -9,6 +9,8 @@ import ru.geekbrains.spring_demo_products_ms.repositories.specifications.Product
 import ru.geekbrains.spring_demo_products_ms.services.ProductService;
 import ru.geekbrains.spring_demo_router_lib.dto.ProductListDto;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -17,10 +19,21 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ProductListDto getProducts(@RequestParam() MultiValueMap<String, String> params, @RequestParam(defaultValue = "1") Integer page) {
-        page = page < 1 ? 1 : page;
-        Page<ProductDto> productPage = productService.getAll(page - 1, ProductSpecifications.build(params));
-        return new ProductListDto(productPage.getContent(), productPage.getNumber(), productPage.getTotalPages());
+    public ProductListDto getProducts(@RequestParam() MultiValueMap<String, String> params) {
+        if (params.containsKey("page") && !params.getFirst("page").isBlank()) {
+            int page = 1;
+            try {
+                page = Integer.parseInt(params.getFirst("page"));
+            }
+            catch (NumberFormatException ignored) { }
+            page = Math.max(page, 1);
+            Page<ProductDto> productPage = productService.getAll(page - 1, ProductSpecifications.build(params));
+            return new ProductListDto(productPage.getContent(), productPage.getNumber(), productPage.getTotalPages());
+        }
+        else {
+            List<ProductDto> productList = productService.getAll(ProductSpecifications.build(params));
+            return new ProductListDto(productList, productList.size(), 1);
+        }
     }
 
     @GetMapping("/{id}")

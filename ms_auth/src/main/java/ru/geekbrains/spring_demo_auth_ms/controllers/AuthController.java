@@ -15,6 +15,7 @@ import ru.geekbrains.spring_demo_auth_ms.models.entity.User;
 import ru.geekbrains.spring_demo_auth_ms.services.UserService;
 import ru.geekbrains.spring_demo_router_lib.dto.LoginRequestDto;
 import ru.geekbrains.spring_demo_router_lib.dto.LoginResponseDto;
+import ru.geekbrains.spring_demo_router_lib.dto.UserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
@@ -70,5 +71,12 @@ public class AuthController {
         else {
             return false;
         }
+    }
+
+    @PostMapping("/registration")
+    public UserDto registration(@RequestBody UserDto userDto) {
+        User user = userService.createUser(userDto);
+        userDto.setId(user.getId());
+        return userDto;
     }
 }

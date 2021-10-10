@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.geekbrains.spring_demo_core_lib.exceptions.UserNotFoundException;
 import ru.geekbrains.spring_demo_auth_ms.models.entity.User;
 import ru.geekbrains.spring_demo_auth_ms.repositories.UserRepository;
+import ru.geekbrains.spring_demo_router_lib.dto.UserDto;
 
 @Service
 public class UserService {
@@ -30,5 +31,10 @@ public class UserService {
 
     public User getUserById(Integer id) {
         return repository.findById(id).orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
+    }
+
+    public User createUser(UserDto userDto) {
+        User user = new User(userDto.getUsername(), passwordEncoder.encode(userDto.getPassword()));
+        return repository.save(user);
     }
 }
