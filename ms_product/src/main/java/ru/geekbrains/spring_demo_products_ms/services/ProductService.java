@@ -12,6 +12,9 @@ import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 import ru.geekbrains.spring_demo_products_ms.models.enitites.Product;
 import ru.geekbrains.spring_demo_products_ms.repositories.ProductRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Data
 public class ProductService {
@@ -23,6 +26,12 @@ public class ProductService {
 
     public Page<ProductDto> getAll(Integer page, Specification<Product> specification) {
         return repository.findAll(specification, PageRequest.of(page, perPage)).map(product -> new ProductDto(product.getId(), product.getTitle(), product.getCost(), new CategoryDto(product.getCategory().getId(), product.getCategory().getName())));
+    }
+
+    public List<ProductDto> getAll(Specification<Product> specification) {
+        return repository.findAll(specification).stream()
+                .map(product -> new ProductDto(product.getId(), product.getTitle(), product.getCost(), new CategoryDto(product.getCategory().getId(), product.getCategory().getName())))
+                .collect(Collectors.toList());
     }
 
     public ProductDto getOne(Integer id) {

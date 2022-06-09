@@ -4,6 +4,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
 import ru.geekbrains.spring_demo_products_ms.models.enitites.Product;
 
+import java.util.List;
+
 public class ProductSpecifications {
     public static Specification<Product> build(MultiValueMap<String, String> params) {
         Specification<Product> specification = Specification.where(null);
@@ -16,6 +18,9 @@ public class ProductSpecifications {
         }
         if (params.containsKey("like") && !params.getFirst("like").isBlank()) {
             specification = specification.and(ProductSpecifications.titleLike(params.getFirst("like")));
+        }
+        if (params.containsKey("ids") && params.get("ids").size() > 0) {
+            specification = specification.and(ProductSpecifications.idIn(params.get("ids")));
         }
 
         return specification;
@@ -36,5 +41,9 @@ public class ProductSpecifications {
                         String.format("%%%s%%", titlePart).toLowerCase()
                 )
         );
+    }
+
+    private static Specification<Product> idIn(List<String> ids) {
+        return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.get("id").in(ids)));
     }
 }
