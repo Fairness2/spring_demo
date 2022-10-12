@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import ru.geekbrains.spring_demo_products_ms.models.dto.ProductCreateDto;
+import ru.geekbrains.spring_demo_products_ms.models.dto.ProductUpdateDto;
 import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 
 import javax.persistence.*;
@@ -22,7 +24,7 @@ public class Product {
     private String title;
     @Column(name = "cost")
     private Integer cost;
-    @Column(name = "created_at")
+    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
@@ -31,7 +33,7 @@ public class Product {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
     /*@ManyToMany
     @JoinTable(
@@ -52,6 +54,19 @@ public class Product {
         this.title = dto.getTitle();
         this.cost = dto.getCost();
         this.category = new Category(dto.getCategory());
+    }
+
+    public Product(ProductCreateDto dto) {
+        this.title = dto.getTitle();
+        this.cost = dto.getCost();
+        this.category = new Category(dto.getCategoryId(), null);
+    }
+
+    public Product(ProductUpdateDto dto) {
+        this.id = dto.getId();
+        this.title = dto.getTitle();
+        this.cost = dto.getCost();
+        this.category = new Category(dto.getCategoryId(), null);
     }
 
 }

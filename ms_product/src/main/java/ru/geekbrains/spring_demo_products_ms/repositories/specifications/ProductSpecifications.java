@@ -1,26 +1,28 @@
 package ru.geekbrains.spring_demo_products_ms.repositories.specifications;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.MultiValueMap;
+import ru.geekbrains.spring_demo_products_ms.models.dto.ProductRequestDto;
 import ru.geekbrains.spring_demo_products_ms.models.enitites.Product;
-
 import java.util.List;
 
 public class ProductSpecifications {
-    public static Specification<Product> build(MultiValueMap<String, String> params) {
+    public static Specification<Product> build(ProductRequestDto requestDto) {
         Specification<Product> specification = Specification.where(null);
+        if (requestDto.getMinCost() != null) {
+            specification = specification.and(ProductSpecifications.costGreaterThanEqual(requestDto.getMinCost()));
+        }
+        if (requestDto.getMaxCost() != null) {
+            specification = specification.and(ProductSpecifications.costLessThanEqual(requestDto.getMaxCost()));
+        }
+        if (requestDto.getTitle() != null) {
+            specification = specification.and(ProductSpecifications.titleLike(requestDto.getTitle()));
+        }
+        if (requestDto.getIds() != null && requestDto.getIds().size() > 0) {
+            specification = specification.and(ProductSpecifications.idIn(requestDto.getIds()));
+        }
 
-        if (params.containsKey("min") && !params.getFirst("min").isBlank()) {
-            specification = specification.and(ProductSpecifications.costGreaterThanEqual(Integer.parseInt(params.getFirst("min"))));
-        }
-        if (params.containsKey("max") && !params.getFirst("max").isBlank()) {
-            specification = specification.and(ProductSpecifications.costLessThanEqual(Integer.parseInt(params.getFirst("max"))));
-        }
-        if (params.containsKey("like") && !params.getFirst("like").isBlank()) {
-            specification = specification.and(ProductSpecifications.titleLike(params.getFirst("like")));
-        }
-        if (params.containsKey("ids") && params.get("ids").size() > 0) {
-            specification = specification.and(ProductSpecifications.idIn(params.get("ids")));
+        if (requestDto.getCategories() != null && requestDto.getCategories().size() > 0) {
+            specification = specification.and(ProductSpecifications.categoryIn(requestDto.getCategories()));
         }
 
         return specification;
@@ -43,7 +45,11 @@ public class ProductSpecifications {
         );
     }
 
-    private static Specification<Product> idIn(List<String> ids) {
-        return ((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.in(root.get("id").in(ids)));
+    private static Specification<Product> idIn(List<Integer> ids) {
+        return ((root, criteriaQuery, criteriaBuilder) -> root.get("id").in(ids));
+    }
+
+    private static Specification<Product> categoryIn(List<Integer> categoryIds) {
+        return ((root, criteriaQuery, criteriaBuilder) -> root.get("category").in(categoryIds));
     }
 }
