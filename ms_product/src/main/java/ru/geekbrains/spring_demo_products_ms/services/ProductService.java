@@ -1,20 +1,13 @@
 package ru.geekbrains.spring_demo_products_ms.services;
 
-import ru.geekbrains.spring_demo_products_ms.models.dto.ProductCreateDto;
-import ru.geekbrains.spring_demo_products_ms.models.dto.ProductUpdateDto;
-import ru.geekbrains.spring_demo_router_lib.dto.CategoryDto;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring_demo_products_ms.exceptions.ProductNotFoundException;
-import ru.geekbrains.spring_demo_router_lib.dto.ProductDto;
 import ru.geekbrains.spring_demo_products_ms.models.enitites.Product;
 import ru.geekbrains.spring_demo_products_ms.repositories.ProductRepository;
-
-import java.util.Optional;
 
 @Service
 @Data

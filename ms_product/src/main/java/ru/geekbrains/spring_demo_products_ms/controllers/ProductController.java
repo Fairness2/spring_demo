@@ -18,7 +18,6 @@ import ru.geekbrains.spring_demo_products_ms.services.ProductService;
 import ru.geekbrains.spring_demo_router_lib.dto.ProductListDto;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.util.List;
@@ -68,7 +67,7 @@ public class ProductController {
      * Получение определённого продукта
      */
     @GetMapping("/{id}")
-    public ProductDto getProduct(@PathVariable("id") @ProductExist @Positive @NotNull Integer id) {
+    public ProductDto getProduct(@PathVariable("id") @Positive @NotNull Integer id) {
         Product product = productService.getOne(id);
         if (product == null) {
             throw new ProductNotFoundException("Продукт не найден");
