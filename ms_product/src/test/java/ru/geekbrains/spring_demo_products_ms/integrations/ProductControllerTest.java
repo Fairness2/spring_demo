@@ -1,4 +1,4 @@
-package ru.geekbrains.spring_demo_products_ms;
+package ru.geekbrains.spring_demo_products_ms.integrations;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.MethodOrderer;
