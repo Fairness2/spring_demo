@@ -20,11 +20,22 @@ import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * Фильтр проверки jwt токена
+ */
 @Component
 public class JwtFilter extends GenericFilterBean {
     @Autowired
     private JwtProvider jwtProvider;
 
+    /**
+     * Проверка токена
+     * @param servletRequest
+     * @param servletResponse
+     * @param filterChain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         String token = getTokenFromRequest((HttpServletRequest) servletRequest);
@@ -37,6 +48,11 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    /**
+     * Получим токен из заголовка
+     * @param request
+     * @return String
+     */
     private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {

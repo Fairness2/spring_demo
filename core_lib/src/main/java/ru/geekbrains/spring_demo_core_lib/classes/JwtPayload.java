@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Данные, которые хранятся в jwt токене
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class JwtPayload {
     private String username;
-    private String password;
     private List<String> rights;
 }

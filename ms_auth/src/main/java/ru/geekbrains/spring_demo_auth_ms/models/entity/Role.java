@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Роль пользователя
+ */
 @Data
 @Entity
 @Table(name = "role")

@@ -18,19 +18,34 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Base64;
 
+/**
+ * Менеджер токена
+ */
 @Slf4j
 @Service
 public class JwtProvider {
 
+    /**
+     * Ключ, которым шифруем все токены
+     */
     @Value("${jwt.secret}")
     private String secretKey;
 
+    /**
+     * Время жизни токена
+     */
     @Value("${jwt.ttl:3600}")
     private long tokenTtl;
 
     @Autowired
     private TokenService tokenService;
 
+    /**
+     * Создание токена
+     * @param payload
+     * @return String
+     * @throws JsonProcessingException
+     */
     public String createToken(JwtPayload payload) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return Jwts.builder()
@@ -40,6 +55,10 @@ public class JwtProvider {
                 .compact();
     }
 
+    /**
+     * Создадим секретный ключ из строки
+     * @return Key
+     */
     private Key getKey() {
         if (secretKey != null) {
             byte[] decodeKey = Base64.getDecoder().decode(secretKey);
@@ -50,6 +69,11 @@ public class JwtProvider {
         }
     }
 
+    /**
+     * Проверим, что токен правильный
+     * @param token
+     * @return boolean
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
@@ -65,6 +89,11 @@ public class JwtProvider {
         }
     }
 
+    /**
+     * Достанем пэйлоад из токена
+     * @param token
+     * @return JwtPayload
+     */
     public JwtPayload getPayloadFromToken(String token) {
         try {
             String subject = Jwts.parserBuilder()

@@ -11,6 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ru.geekbrains.spring_demo_core_lib.filters.JwtFilter;
 
+/**
+ * Базовый класс настройки авторизации в сервисах
+ */
 @Configuration
 public abstract class CommonSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -18,13 +21,11 @@ public abstract class CommonSecurityConfig extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().disable()
+        http.httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         this.configurePaths(http);
-        http
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -32,6 +33,11 @@ public abstract class CommonSecurityConfig extends WebSecurityConfigurerAdapter 
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Настройка открытых и закрытых путей
+     * @param http
+     * @throws Exception
+     */
     protected abstract void configurePaths(HttpSecurity http) throws Exception;
 
     /*@Bean

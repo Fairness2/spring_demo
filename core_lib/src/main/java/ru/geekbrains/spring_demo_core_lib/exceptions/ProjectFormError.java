@@ -1,9 +1,10 @@
 package ru.geekbrains.spring_demo_core_lib.exceptions;
 
-import lombok.Data;
-
 import java.util.Map;
 
+/**
+ * Стандартная дтошка для ошибки по переданной форме
+ */
 public class ProjectFormError extends ProjectError {
     private Map<String, String> errors;
 

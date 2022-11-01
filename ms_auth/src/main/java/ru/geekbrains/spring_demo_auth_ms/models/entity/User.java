@@ -4,12 +4,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.geekbrains.spring_demo_auth_ms.models.dto.RegistrationUserDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Пользователь
+ */
 @Data
 @Entity
 @Table(name = "user")
@@ -43,5 +46,10 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(RegistrationUserDto registrationUserDto) {
+        this.username = registrationUserDto.getUsername();
+        this.password = registrationUserDto.getPassword();
     }
 }

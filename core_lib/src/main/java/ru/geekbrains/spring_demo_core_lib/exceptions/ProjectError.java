@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * Стандартная дто для ошибки сервисов
+ */
 @Data
 public class ProjectError {
     private int status;

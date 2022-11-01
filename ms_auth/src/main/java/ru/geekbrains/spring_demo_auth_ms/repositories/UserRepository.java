@@ -6,7 +6,15 @@ import ru.geekbrains.spring_demo_auth_ms.models.entity.User;
 
 import java.util.Optional;
 
+/**
+ * Репозиторий пользователей
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    /**
+     * Поиск по юзернейму
+     * @param username
+     * @return
+     */
     Optional<User> findByUsername(String username);
 }

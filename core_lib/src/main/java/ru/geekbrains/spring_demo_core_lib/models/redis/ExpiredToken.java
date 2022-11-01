@@ -8,6 +8,9 @@ import org.springframework.data.redis.core.index.Indexed;
 
 import java.io.Serializable;
 
+/**
+ * Хранение истёкших токенов
+ */
 @RedisHash(value = "loginToken", timeToLive = 3600) //TODO перевести на конфиг
 @Data
 @AllArgsConstructor
