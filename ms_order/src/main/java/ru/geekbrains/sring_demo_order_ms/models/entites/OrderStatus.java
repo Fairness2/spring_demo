@@ -19,13 +19,12 @@ public class OrderStatus {
     private String code;
     @Column(name = "title")
     private String title;
-    @Column(name = "created_at")
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
-    @OneToMany(mappedBy = "status")
+
+    @ManyToMany
+    @JoinTable(
+            name = "ref_order_status",
+            joinColumns = @JoinColumn(name = "status_code"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orders;
 
     public OrderStatus( String code, String title) {

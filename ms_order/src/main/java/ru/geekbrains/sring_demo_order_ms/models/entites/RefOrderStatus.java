@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "ref_product_order")
+@Table(name = "ref_order_status")
 @NoArgsConstructor
-public class OrderProduct {
+public class RefOrderStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "cost")
-    private Integer cost;
-    @Column(name = "product_id")
-    private Integer productId;
+    @Column(name = "order_id")
+    private Integer orderId;
+    @Column(name = "status_code")
+    private Integer statusCode;
     @Column(name = "created_at")
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -30,4 +30,7 @@ public class OrderProduct {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+    @ManyToOne
+    @JoinColumn(name = "status_code")
+    private OrderStatus status;
 }

@@ -1,7 +1,7 @@
 server:
   port: 8189
   servlet:
-    context-path: /api/v1
+    context-path: /api/v1/order
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,3 +13,20 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  cache:
+    redis:
+      use-key-prefix: true
+      key-prefix: ms_product
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  application:
+    name: order-service
+jwt:
+  secret: 45T47fcXazP5pgMmWXKByCZWpWUzQrZrJMVegYVbcxhXFk22uVDWS9TAzpwmq8ZG
+  ttl: 3600
+eureka:
+  client:
+    service-url:
+      default-zone: ${EUREKA_URI:http://localhost:8761/eureka}
